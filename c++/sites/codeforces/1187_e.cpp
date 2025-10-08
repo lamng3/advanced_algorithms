@@ -7,39 +7,8 @@ using namespace std;
 typedef vector<int> vi;
 typedef vector< vector<int> > vii;
 
-/*
-dp1[u] = max points moving downward from u
-dp2[u] = max points moving upward to u
-h[u] = size of subtree at u
-*/
-vi dp1, dp2, h;
-
 // undirected graph
 vii g;
-
-void dfs0(int u, int p) {
-    for (int v : g[u]) {
-        if (v == p) continue;
-        dfs0(v, u);
-        h[u] += h[v];
-    }
-}
-
-void dfs1(int u, int p) {
-    for (int v : g[u]) {
-        if (v == p) continue;
-        dfs1(v, u);
-        dp1[u] += dp1[v];
-    }
-    dp1[u] += h[u];
-}
-
-void dfs2(int u, int p) {
-    for (int v : g[u]) {
-        if (v == p) continue;
-        // dp2[v] ~ dp2[u]
-    }
-}
 
 /*
     connected components in a tree
@@ -56,15 +25,7 @@ void solve() {
         g[v].push_back(u);
     }
 
-    dp1.assign(n, 0);
-    dp2.assign(n, 0);
-    h.assign(n, 1);
-
-    dfs0(0, -1);
-    dfs1(0, -1);
-    dfs2(0, -1);   
-
-    cout << max(dp1[0], dp2[0]) << '\n'; 
+    
 }
 
 int main() {
