@@ -1,0 +1,20 @@
+// problem url: https://naq25.kattis.com/contests/naq25/problems/tenplayerbingo
+#include <bits/stdc++.h>
+using namespace std;
+
+void solve() {
+    for (int i = 0; i < 99; i++) { int x; cin >> x; }
+    int last; cin >> last;
+    cout << last % 10 << '\n';
+}
+
+int main() {
+    // freopen("name.in", "r", stdin);
+    // freopen("name.out", "w", stdout);
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int tt = 1;
+    // cin >> tt;
+    while (tt--) solve();
+    return 0;
+}
