@@ -1,4 +1,4 @@
-// problem url: https://cses.fi/problemset/task/1690
+// problem url: https://atcoder.jp/contests/abc187/tasks/abc187_f
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -17,40 +17,51 @@ using pii = pair< int, int >;
 #define pb push_back
 
 const int mod = 1e9+7;
+const int INF = 1e+7;
 
 void solve() {
-    int n, m;
+    int n, m; 
     cin >> n >> m;
 
-    vii g(n, vi());
+    vi g(n);
     for (int i = 0; i < m; i++) {
-        int a, b; 
+        int a, b;
         cin >> a >> b;
         a--; b--;
-        g[b].pb(a);
+        g[a] |= (1 << b);
+        g[b] |= (1 << a);
     }
 
     int FULL = 1 << n;
-    vii dp(FULL, vi(n, 0));
-    dp[1][0] = 1;
+    vi dp(FULL, INF);
 
+    // prefill
     for (int mask = 0; mask < FULL; mask++) {
-        if ((mask & (1 << 0)) == 0) continue;
-        if ((mask & (1 << (n-1))) && (mask != FULL-1)) continue;
-
+        bool ok = true;
         for (int u = 0; u < n; u++) {
             if ((mask & (1 << u)) == 0) continue;
+            // check if u is connected to all other nodes in mask
+            for (int v = 0; v < n; v++) {
+                if (u == v || (mask & (1 << v)) == 0) continue;
+                if ((g[u] & (1 << v)) == 0) {
+                    ok = false;
+                    break;
+                }
+            }
+        }
+        if (ok) dp[mask] = 1;
+    }
 
-            for (int v : g[u]) {
-                // from v go to u
-                if ((mask & (1 << v)) == 0) continue;
-                int prev_state = mask ^ (1 << u);
-                dp[mask][u] = (dp[mask][u] + dp[prev_state][v]) % mod;
+    for (int mask = 0; mask < FULL; mask++) {
+        for (int submask = mask; submask != 0; submask = (submask-1) & mask) {
+            int subset = mask ^ submask;
+            if (dp[subset] != INF && dp[submask] != INF) {
+                dp[mask] = min(dp[mask], dp[subset] + dp[submask]);
             }
         }
     }
 
-    cout << dp[FULL-1][n-1] << '\n';
+    cout << dp[FULL-1] << '\n';
 }
 
 int main() {
