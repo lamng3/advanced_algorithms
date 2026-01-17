@@ -22,10 +22,10 @@ const int INF = 1e+7;
 void solve() {
     int n, m; 
     cin >> n >> m;
-
-    vi g(n);
+    
+    vi g(n, 0);
     for (int i = 0; i < m; i++) {
-        int a, b;
+        int a, b; 
         cin >> a >> b;
         a--; b--;
         g[a] |= (1 << b);
@@ -34,26 +34,26 @@ void solve() {
 
     int FULL = 1 << n;
     vi dp(FULL, INF);
-
-    // prefill
+    
     for (int mask = 0; mask < FULL; mask++) {
-        bool ok = true;
+        bool connected = true;
         for (int u = 0; u < n; u++) {
             if ((mask & (1 << u)) == 0) continue;
-            // check if u is connected to all other nodes in mask
+            // check if u connected to others
             for (int v = 0; v < n; v++) {
                 if (u == v || (mask & (1 << v)) == 0) continue;
                 if ((g[u] & (1 << v)) == 0) {
-                    ok = false;
+                    connected = false;
                     break;
                 }
             }
         }
-        if (ok) dp[mask] = 1;
+        if (connected) dp[mask] = 1;
     }
 
     for (int mask = 0; mask < FULL; mask++) {
-        for (int submask = mask; submask != 0; submask = (submask-1) & mask) {
+        if (dp[mask] == 1) continue;
+        for (int submask = mask; submask != 0; submask = (submask-1)&mask) {
             int subset = mask ^ submask;
             if (dp[subset] != INF && dp[submask] != INF) {
                 dp[mask] = min(dp[mask], dp[subset] + dp[submask]);
