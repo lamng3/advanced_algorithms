@@ -13,12 +13,27 @@ using vii = vector< vector<int> >;
 
 #define fi first
 #define se second
-#define pb push_back
 
 const int mod = 1e9+7;
+const int INF = 1e9+7;
 
 void solve() {
-    
+    int n; cin >> n;
+
+    vi a(n);
+    for (int i = 0; i < n; i++) cin >> a[i];
+
+    sort(a.begin(), a.end());
+    a.erase(unique(a.begin(), a.end()), a.end());
+
+    int best = 1, curr = 1;
+    for (int i = 1; i < (int)a.size(); i++) {
+        if (a[i] == a[i-1] + 1) curr++;
+        else curr = 1;
+        best = max(best, curr);
+    }
+
+    cout << best << '\n';
 }
 
 int main() {

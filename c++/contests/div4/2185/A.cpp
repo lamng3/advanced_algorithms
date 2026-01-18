@@ -5,6 +5,7 @@ using namespace std;
 using ll = long long;
 using vi = vector<int>;
 using vii = vector< vector<int> >;
+using pii = pair< int, int >;
 
 #define REP(i, n) for (int i = 0; i < (n); i++)
 #define FOR(i, a, b) for (int i = (a); i <= (b); i++)
@@ -18,7 +19,8 @@ using vii = vector< vector<int> >;
 const int mod = 1e9+7;
 
 void solve() {
-    
+    int n; cin >> n;
+    for (int i = 1; i <= n; i++) cout << (i * i) << (i == n ? '\n' : ' ');
 }
 
 int main() {

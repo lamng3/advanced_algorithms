@@ -13,12 +13,38 @@ using vii = vector< vector<int> >;
 
 #define fi first
 #define se second
-#define pb push_back
 
 const int mod = 1e9+7;
 
 void solve() {
+    int n; cin >> n;
     
+    vi a(n);
+    for (int i = 0; i < n; i++) cin >> a[i];
+
+    int mx = 0, mxpref = 0;
+    for (int i = 0; i < n; i++) {
+        mxpref = max(mxpref, a[i]);
+        mx += mxpref;
+    }
+
+    int ans = mx;
+    
+    for (int i = 0; i < n; i++) {
+        for (int j = i; j < n; j++) {
+            vi b(n);
+            for (int k = 0; k < n; k++) b[k] = a[k];
+            swap(b[i], b[j]);
+            int x = 0, mxp = 0;
+            for (int k = 0; k < n; k++) {
+                mxp = max(mxp, b[k]);
+                x += mxp;
+            }
+            ans = max(ans, x);
+        }
+    }
+
+    cout << ans << '\n';
 }
 
 int main() {
