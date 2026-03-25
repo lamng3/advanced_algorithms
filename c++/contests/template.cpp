@@ -15,7 +15,8 @@ using vii = vector< vector<int> >;
 #define se second
 #define pb push_back
 
-const int mod = 1e9+7;
+const int INF = 1e9+7;
+const int MOD = 1e9+7;
 
 void solve() {
     
