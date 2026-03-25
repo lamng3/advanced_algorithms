@@ -5,6 +5,7 @@ using namespace std;
 using ll = long long;
 using vi = vector<int>;
 using vii = vector< vector<int> >;
+using pii = pair< int, int >;
 
 #define REP(i, n) for (int i = 0; i < (n); i++)
 #define FOR(i, a, b) for (int i = (a); i <= (b); i++)
@@ -18,8 +19,32 @@ using vii = vector< vector<int> >;
 const int INF = 1e9+7;
 const int MOD = 1e9+7;
 
-void solve() {
+void solve() {  
+    int n, x;
+    cin >> n >> x;
 
+    vi a(n);
+    for (int i = 0; i < n; i++) cin >> a[i];
+
+    vector<pii> pa(n);
+    for (int i = 0; i < n; i++) pa[i] = make_pair(a[i], i+1);
+    sort(pa.begin(), pa.end());
+
+    for (int i = 0; i < n; i++) {
+        int L = i+1, R = n-1;
+        int tgt = x - pa[i].fi;
+        while (R > L) {
+            int s = pa[L].fi + pa[R].fi;
+            if (s == tgt) {
+                cout << pa[i].se << ' ' << pa[L].se << ' ' << pa[R].se << '\n';
+                return;
+            }
+            if (s < tgt) L++;
+            else R--;
+        }
+    }
+
+    cout << "IMPOSSIBLE" << '\n';
 }
 
 int main() {

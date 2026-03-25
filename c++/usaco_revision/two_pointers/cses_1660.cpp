@@ -19,7 +19,23 @@ const int INF = 1e9+7;
 const int MOD = 1e9+7;
 
 void solve() {
+    int n, x;
+    cin >> n >> x;
 
+    vi a(n);
+    for (int i = 0; i < n; i++) cin >> a[i];
+
+    map<ll,int> f;
+    f[0] = 1;
+
+    ll r = 0, ans = 0;
+    for (int i = 0; i < n; i++) {
+        r += a[i];
+        ans += f[r-x];
+        f[r]++;
+    }
+
+    cout << ans << '\n';
 }
 
 int main() {
